@@ -52,6 +52,8 @@ Or use a GUI: **DB Browser for SQLite** (free, recommended).
 
 **1.** When a user logs a new activity, how many database tables are written to?
 List them and explain why each one is affected.
+the activities table and the notifications table,
+activities is affected because it needs to register the activity and the notification is affected because it is needed to notify your friend about what you did 
 
 ---
 
@@ -63,11 +65,15 @@ What happens, and why? What would you need to do instead?
 **3.** User `nova` changes her username to `nova_2`.
 She then checks her friends' notification feeds.
 What do they see — the old name or the new one? Why?
+they see the new username the notification field uses thhe variable username so it changes when changed 
 
 ---
 
 **4.** Trace the full journey of a `POST /activities` request.
 Starting from the HTTP call, list every operation that happens before the response is returned.
+inserting into the activities table 
+then pulling the user that created that activity then we get their username and then we find what game they did it on
+after doing all that we can find the friends of this user and formulate a notification for those friends and we describe who did it what triggered it and in what game 
 
 ---
 
@@ -90,6 +96,8 @@ In what order must you delete rows across the tables, and why does the order mat
 **8.** The `notifications` table has a foreign key pointing to `activities`.
 What happens if you try to delete an activity that has notifications attached to it?
 
+sqlite will reject the deletion because there is no cascade
+
 ---
 
 **9.** A bug is found in the game catalog — wrong genre for one game.
@@ -101,3 +109,4 @@ What else just went down, and for how long?
 **10.** A teammate says: *"let's just move the notification logic into its own function in `app.py`"*.
 Does that solve the problem described in Task 4?
 What is the actual architectural issue?
+no it doesn't, that only improves code origanization the real issue is that the route mixes multiple responsiblities in one place 

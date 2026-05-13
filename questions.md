@@ -59,6 +59,7 @@ activities is affected because it needs to register the activity and the notific
 
 **2.** You call `DELETE FROM users WHERE id = 3` directly in SQLite.
 What happens, and why? What would you need to do instead?
+the commmand succeeded and deleted user id 3 , it shows the foreign key enforcement was not enabled, since normally it would fail with a foreing key constraint error 
 
 ---
 
@@ -80,17 +81,24 @@ after doing all that we can find the friends of this user and formulate a notifi
 **5.** `pixel_queen` opts out of activity tracking.
 A teammate adds an `opted_out` boolean column to the `users` table and updates the `POST /activities` API route to check it.
 Is the feature fully implemented? What did they miss?
+no only the api route was updated there's also seperate html routes that create activities and notification directly 
 
 ---
 
 **6.** How many rows are created in the database when `nova` logs one activity, given the current seed data?
 Show your working.
+one for the activities table to insert her activity and then three in the notifications table to send her three friends notifications to know what her activity is 
 
 ---
 
 **7.** You need to delete `maya_r`.
 In what order must you delete rows across the tables, and why does the order matter?
-
+notifications
+activities
+user_games
+friends
+users
+we go in order of what variable is being used in each one so no one refernces notfications and it refences multiples ones below it so it's the first one to go, and then the same goes for activities as it needs the games friends and the users, and then so on and so forth
 ---
 
 **8.** The `notifications` table has a foreign key pointing to `activities`.
@@ -103,6 +111,8 @@ sqlite will reject the deletion because there is no cascade
 **9.** A bug is found in the game catalog — wrong genre for one game.
 You fix it and restart the app to ship the change.
 What else just went down, and for how long?
+everything being hosted goes down too, and it stays down for the duration of the restart, the things that were in example are :
+users, activities, notifications, API routes
 
 ---
 
